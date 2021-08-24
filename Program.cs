@@ -70,7 +70,6 @@ namespace PlexTokenAuth
             string response = null;
             using (WebClient webclient = new WebClient())
             {
-                var data = new System.Collections.Specialized.NameValueCollection();
                 webclient.Headers["accept"] = "application/json";
                 response = webclient.DownloadString("https://plex.tv/api/v2/pins/"+pin+"/?code="+code+ "&X-Plex-Client-Identifier="+Client_Identifier);
             }
