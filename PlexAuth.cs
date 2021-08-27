@@ -67,12 +67,18 @@ namespace PlexTokenAuth
         {
             string tkn;
             string response = null;
-            using (WebClient webclient = new WebClient())
+            string url = null;
+            try
             {
-                webclient.Headers["accept"] = "application/json";
-
-                string url = "https://plex.tv/api/v2/pins/" + pin + "/?code=" + code + "&X-Plex-Client-Identifier=" + Client_Identifier;
-                response = webclient.DownloadString("https://plex.tv/api/v2/pins/" + pin + "/?code=" + code + "&X-Plex-Client-Identifier=" + Client_Identifier);
+                using (WebClient webclient = new WebClient())
+                {
+                    webclient.Headers["accept"] = "application/json";
+                    url = "https://plex.tv/api/v2/pins/" + pin + "/?code=" + code + "&X-Plex-Client-Identifier=" + Client_Identifier;
+                    response = webclient.DownloadString("https://plex.tv/api/v2/pins/" + pin + "/?code=" + code + "&X-Plex-Client-Identifier=" + Client_Identifier);
+                }
+            } catch
+            {
+                return null;
             }
             dynamic obj_plex_pin = JsonConvert.DeserializeObject(response);
             tkn = obj_plex_pin["authToken"];
