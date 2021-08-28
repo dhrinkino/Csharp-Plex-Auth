@@ -57,7 +57,7 @@ public bool PlexAuth.LoadPin(string filename);
 ## Getting Server URI
 Check plex resources and try to find server. Return server URI if found or null if no server was found
 ```c#
-public string GetServer();
+public string PlexAuth.GetServer();
 ```
 ## Example
 Program.cs contain basic example
