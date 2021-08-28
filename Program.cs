@@ -31,6 +31,7 @@ namespace PlexTokenAuth
                 }
             }
             Console.WriteLine(PlexController.CurrentToken()); // print current data
+            Console.WriteLine(PlexController.GetServer()); // get URI of PMS
 
         }
         

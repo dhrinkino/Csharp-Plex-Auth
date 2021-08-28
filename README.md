@@ -53,6 +53,12 @@ Load pin,code and current token from file, return true or false. You need to pro
 ```c#
 public bool PlexAuth.LoadPin(string filename);
 ```
+
+## Getting Server URI
+Check plex resources and try to find server. Return server URI if found or null if no server was found
+```c#
+public string GetServer();
+```
 ## Example
 Program.cs contain basic example
 

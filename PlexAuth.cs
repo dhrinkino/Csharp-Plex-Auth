@@ -125,6 +125,45 @@ namespace PlexTokenAuth
             }
             return true;
         }
+        
+        public string GetServer()
+        {
+            dynamic obj_srv = null;
+            try
+            {
+                using (WebClient webclient = new WebClient())
+                {
+                    webclient.Headers["accept"] = "application/json";
+                    string url = "https://plex.tv/api/resources?X-Plex-Token=" + token;
+                    string response = webclient.DownloadString(url);
+                    XmlDocument PlexXml = new XmlDocument();
+                    PlexXml.LoadXml(response);
+                    string jsonText = JsonConvert.SerializeXmlNode(PlexXml);
+                    obj_srv = JsonConvert.DeserializeObject(jsonText);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            int count = obj_srv["MediaContainer"]["@size"];
+            if (count > 1) { 
+                for (int i = 0; i < count; i++)
+                {
+                    if (obj_srv["MediaContainer"]["Device"][i]["@provides"] == "server") {
+                        return obj_srv["MediaContainer"]["Device"][i]["Connection"]["@uri"];
+                    }
+                }
+            } else if(count == 1)
+            {
+                if (obj_srv["MediaContainer"]["Device"]["@provides"] == "server")
+                {
+                    return obj_srv["MediaContainer"]["Device"]["Connection"]["@uri"];
+                }
+            }
+            return null;
+        }
 
 
     }
